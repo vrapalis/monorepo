@@ -1,0 +1,78 @@
+import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
+
+plugins {
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'com.bmuschko.docker-remote-api' version '6.4.0'
+}
+
+subprojects {
+    group = 'com.sitconad.www'
+    version = '0.0.1-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        compileOnly 'org.springframework.boot:spring-boot-devtools'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.1.RELEASE")
+        }
+    }
+}
+
+configure(subprojects.findAll { it.name == 'blog' }) {
+    apply plugin: 'com.bmuschko.docker-remote-api'
+
+    afterEvaluate {
+
+        task createPostgresDevContainer(type: DockerCreateContainer) {
+            targetImageId 'postgres:latest'
+            containerName = project.property('PROJECT_CONTAINER_NAME')
+            envVars.put('POSTGRES_DB', project.property('PROJECT_POSTGRES_DB'))
+            envVars.put('POSTGRES_USER', project.property('PROJECT_POSTGRES_USER'))
+            envVars.put('POSTGRES_PASSWORD', project.property('PROJECT_POSTGRES_PASSWORD'))
+            hostConfig.portBindings = [project.property('PROJECT_POSTGRES_PORT')]
+            hostConfig.autoRemove = true
+        }
+
+        task startPostgresDevContainer(type: DockerStartContainer) {
+            dependsOn createPostgresDevContainer
+            targetContainerId createPostgresDevContainer.getContainerId()
+        }
+
+        task stopPostgresDevContainer(type: DockerStopContainer) {
+            targetContainerId createPostgresDevContainer.getContainerId()
+        }
+
+        bootRun.dependsOn('startPostgresDevContainer')
+        bootRun.finalizedBy('stopPostgresDevContainer')
+    }
+}
