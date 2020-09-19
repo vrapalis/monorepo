@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "projects": {
+    "websites-vrapalis": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/websites/vrapalis",
+      "sourceRoot": "apps/websites/vrapalis/src",
+      "prefix": "web-clients",
+      "architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "outputPath": "dist/apps/websites/vrapalis",
+            "index": "apps/websites/vrapalis/src/index.html",
+            "main": "apps/websites/vrapalis/src/main.ts",
+            "polyfills": "apps/websites/vrapalis/src/polyfills.ts",
+            "tsConfig": "apps/websites/vrapalis/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/websites/vrapalis/src/favicon.ico",
+              "apps/websites/vrapalis/src/assets"
+            ],
+            "styles": ["apps/websites/vrapalis/src/styles.scss"],
+            "scripts": ["./node_modules/adapterjs/publish/adapter.min.js"],
+            "customWebpackConfig": {
+              "path": "./custom-webpack.config.js",
+              "replaceDuplicatePlugins": true
+            }
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/websites/vrapalis/src/environments/environment.ts",
+                  "with": "apps/websites/vrapalis/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-builders/custom-webpack:dev-server",
+          "options": {
+            "browserTarget": "websites-vrapalis:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "websites-vrapalis:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "websites-vrapalis:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/websites/vrapalis/tsconfig.app.json",
+              "apps/websites/vrapalis/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/websites/vrapalis/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/websites/vrapalis/jest.config.js",
+            "tsConfig": "apps/websites/vrapalis/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/websites/vrapalis/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "websites/vrapalis-e2e": {
+      "root": "apps/websites/vrapalis-e2e",
+      "sourceRoot": "apps/websites/vrapalis-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/websites/vrapalis-e2e/cypress.json",
+            "tsConfig": "apps/websites/vrapalis-e2e/tsconfig.e2e.json",
+            "devServerTarget": "websites-vrapalis:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "websites-vrapalis:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/websites/vrapalis-e2e/tsconfig.e2e.json"],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/websites/vrapalis-e2e/**/*"
+            ]
+          }
+        }
+      }
+    },
+    "janus": {
+      "projectType": "library",
+      "root": "libs/janus",
+      "sourceRoot": "libs/janus/src",
+      "prefix": "web-clients",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/janus/tsconfig.lib.json",
+              "libs/janus/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/janus/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/janus/jest.config.js",
+            "tsConfig": "libs/janus/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/janus/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "websites-vrapalis"
+}

@@ -1,0 +1,17 @@
+<div class="container">
+  <h3>Choose Room</h3>
+  <select class="form-select">
+    <option *ngFor="let room of(rooms$ | async)">{{room.description}}</option>
+  </select>
+  <button class="btn btn-success mt-3">Go to room</button>
+
+  <div class="p-3 mt-5" style="border: 1px solid #0094ba; border-radius: 5px;">
+    <h3>Create Room</h3>
+    <div class="mb-3 mt-3">
+      <label for="exampleFormControlInput1" class="form-label">Name</label>
+      <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="room name" #roomName>
+      <button class="btn btn-success mt-3" (click)="createRoom(roomName.value)">Go to room</button>
+    </div>
+  </div>
+</div>
+

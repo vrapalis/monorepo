@@ -7,6 +7,11 @@ plugins {
     id 'com.bmuschko.docker-remote-api' version '6.4.0'
 }
 
+ext {
+    MAPSTRUCT_VERSION = '1.4.0.CR1';
+    ASSERTJ_VERSION = '3.17.2';
+}
+
 subprojects {
     group = 'com.sitconad.www'
     version = '0.0.1-SNAPSHOT'
@@ -32,6 +37,12 @@ subprojects {
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         compileOnly 'org.springframework.boot:spring-boot-devtools'
         annotationProcessor 'org.projectlombok:lombok'
+
+        implementation "org.mapstruct:mapstruct:${MAPSTRUCT_VERSION}"
+        annotationProcessor "org.mapstruct:mapstruct-processor:${MAPSTRUCT_VERSION}"
+
+        testImplementation "org.assertj:assertj-core:${ASSERTJ_VERSION}"
+
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
@@ -48,7 +59,7 @@ subprojects {
     }
 }
 
-configure(subprojects.findAll { it.name == 'blog' }) {
+configure(subprojects.findAll { it.name == 'vrapalis' || it.name == 'chat' }) {
     apply plugin: 'com.bmuschko.docker-remote-api'
 
     afterEvaluate {
