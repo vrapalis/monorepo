@@ -11,6 +11,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mapstruct/mapstruct-processor/1.4.0.CR1/d27686172737340cd04072323402720a7588d62c/mapstruct-processor-1.4.0.CR1.jar" />
         </processorPath>
         <module name="backend.libraries.utils.main" />
+        <module name="backend.libraries.swagger.main" />
         <module name="backend.websites.vrapalis.main" />
         <module name="backend.apps.main" />
         <module name="backend.apps.chat.main" />

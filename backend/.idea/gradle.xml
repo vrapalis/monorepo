@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/apps" />
             <option value="$PROJECT_DIR$/apps/chat" />
             <option value="$PROJECT_DIR$/libraries" />
+            <option value="$PROJECT_DIR$/libraries/swagger" />
             <option value="$PROJECT_DIR$/libraries/utils" />
             <option value="$PROJECT_DIR$/libraries/websites" />
             <option value="$PROJECT_DIR$/websites" />

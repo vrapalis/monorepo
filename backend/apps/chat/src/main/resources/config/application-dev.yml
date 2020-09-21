@@ -19,3 +19,12 @@ spring:
 
 server:
   port: 8081
+
+swagger-api-documentation:
+  contact-name: vrapalis
+  contact-url: vrapalis.com
+  contact-email: vitali.rapalis@mail.ru
+  api-base-packages: com.vrapalis.www
+  api-description: Chat
+  api-title: Rest api
+  api-version: 0.0.1

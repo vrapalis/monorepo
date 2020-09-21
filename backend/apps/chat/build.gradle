@@ -18,7 +18,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	implementation 'org.flywaydb:flyway-core'
 
@@ -28,6 +27,7 @@ dependencies {
 	implementation 'com.auth0:java-jwt:3.10.3'
 
 	implementation project(':libraries:utils')
+	implementation project(':libraries:swagger')
 }
 
 

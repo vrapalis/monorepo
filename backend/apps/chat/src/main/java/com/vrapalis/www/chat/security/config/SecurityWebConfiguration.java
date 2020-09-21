@@ -62,6 +62,10 @@ public class SecurityWebConfiguration extends WebSecurityConfigurerAdapter {
 //                .addFilterBefore(new UaaAuthorizationFilter(authenticationManager(), jwtProperties, userRepository, uaaJwtTokenService),
 //                        UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
+
+                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/docs/**").permitAll()
                 .antMatchers("/login").permitAll()
