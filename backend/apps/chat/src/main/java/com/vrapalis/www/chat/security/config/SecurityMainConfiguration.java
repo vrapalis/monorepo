@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
-public class SecurityConfiguration {
+public class SecurityMainConfiguration {
     @Bean
     public AuditorAware<String> auditorProvider() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

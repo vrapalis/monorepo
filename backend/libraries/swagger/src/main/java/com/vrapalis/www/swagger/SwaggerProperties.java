@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "swagger-api-documentation")
+@ConfigurationProperties(prefix = "vrapalis.swagger")
 public class SwaggerProperties {
     /**
      * Contact name

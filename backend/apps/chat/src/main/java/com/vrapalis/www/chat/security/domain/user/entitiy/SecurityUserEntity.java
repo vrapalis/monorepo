@@ -40,7 +40,7 @@ public class SecurityUserEntity extends SecurityAbstractEntity implements Serial
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
-    })
+    }, fetch = FetchType.EAGER)
     @JoinTable(name = "app_user_has_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")

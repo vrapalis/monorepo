@@ -6,6 +6,7 @@ import com.vrapalis.www.chat.security.domain.user.service.SecurityUserService;
 import com.vrapalis.www.chat.security.filter.SecurityJwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -89,6 +90,11 @@ public class SecurityWebConfiguration extends WebSecurityConfigurerAdapter {
                 "/assets/**");
     }
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     @Bean
     public CorsFilter corsFilter() {
