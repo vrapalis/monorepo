@@ -1,7 +1,9 @@
 package com.vrapalis.www.chat.security.config;
 
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.vrapalis.www.chat.security.domain.jwt.SecurityJwtProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -49,4 +51,8 @@ public class SecurityMainConfiguration {
         return mappingJackson2HttpMessageConverter;
     }
 
+    @Bean
+    public Algorithm algorithm(SecurityJwtProperties jwtProperties) {
+        return Algorithm.HMAC256(jwtProperties.getSecret());
+    }
 }

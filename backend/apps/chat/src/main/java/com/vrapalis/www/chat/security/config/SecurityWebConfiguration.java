@@ -2,7 +2,7 @@ package com.vrapalis.www.chat.security.config;
 
 import com.vrapalis.www.chat.security.config.errorhandler.SecurityRestAuthenticationEntryPoint;
 import com.vrapalis.www.chat.security.config.errorhandler.SecurityRestAuthorizationAccessDeniedHandler;
-import com.vrapalis.www.chat.security.domain.user.service.SecurityUserService;
+import com.vrapalis.www.chat.security.domain.user.service.SecurityUserDetailsServiceImp;
 import com.vrapalis.www.chat.security.filter.SecurityJwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
@@ -23,7 +24,7 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityWebConfiguration extends WebSecurityConfigurerAdapter {
-    private SecurityUserService userService;
+    private UserDetailsService userDetailsService;
     private SecurityRestAuthorizationAccessDeniedHandler accessDeniedHandler;
     private SecurityRestAuthenticationEntryPoint authenticationEntryPoint;
 
@@ -36,7 +37,7 @@ public class SecurityWebConfiguration extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider getAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(getPasswordEncoder());
-        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setUserDetailsService(userDetailsService);
         return authenticationProvider;
     }
 

@@ -18,6 +18,7 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 @Table(name = "role")
 public class SecurityRoleEntity extends SecurityAbstractEntity implements Serializable {
     @Id

@@ -1,0 +1,45 @@
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
+
+configure(subprojects.findAll { it.name == "gateway" || it.name == "uaa" }) {
+    apply plugin: 'com.bmuschko.docker-remote-api'
+
+    ext {
+        SPRING_PROFILES_ACTIVE = project.hasProperty('SPRING_PROFILES_ACTIVE') ? project.property('SPRING_PROFILES_ACTIVE') : "dev"
+        PORT = project.hasProperty('PORT') ? project.property('PORT') : "8080"
+    }
+
+    afterEvaluate {
+        tasks.create('createDockerfile', Dockerfile) {
+            group 'Docker'
+            description 'Crete docker file'
+            from('openjdk:12-alpine')
+            label([maintainer: "vrapalis", project: project.name])
+            copyFile("${archivesBaseName}-${version}.jar", "${archivesBaseName}-${version}.jar")
+            workingDir('app')
+            entryPoint('java')
+            defaultCommand('-jar', "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", "${archivesBaseName}-${version}.jar")
+            exposePort(PORT.toInteger())
+        }
+
+        tasks.create('createDockerImage', DockerBuildImage) {
+            group 'Docker'
+            description 'Crete docker image'
+            inputDir = file('docker/myapp')
+            images.add('test/myapp:latest')
+        }
+
+        tasks.create('createDockerContainer', DockerCreateContainer) {
+            group 'Docker'
+            description 'Crete docker container'
+            targetImageId 'postgres:latest'
+            containerName = project.property('PROJECT_CONTAINER_NAME')
+            envVars.put('POSTGRES_DB', project.property('PROJECT_POSTGRES_DB'))
+            envVars.put('POSTGRES_USER', project.property('PROJECT_POSTGRES_USER'))
+            envVars.put('POSTGRES_PASSWORD', project.property('PROJECT_POSTGRES_PASSWORD'))
+            hostConfig.portBindings = [project.property('PROJECT_POSTGRES_PORT')]
+            hostConfig.autoRemove = true
+        }
+    }
+}

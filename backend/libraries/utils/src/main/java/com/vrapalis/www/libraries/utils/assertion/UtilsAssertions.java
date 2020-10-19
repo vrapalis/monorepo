@@ -1,6 +1,6 @@
 package com.vrapalis.www.libraries.utils.assertion;
 
-import com.vrapalis.www.libraries.utils.error.UtilsBeanValidationError;
+import com.vrapalis.www.libraries.utils.throwable.UtilsBeanValidationException;
 import org.springframework.validation.BindingResult;
 
 public final class UtilsAssertions {
@@ -10,7 +10,7 @@ public final class UtilsAssertions {
 
     public static void noBeanValidationErrors(final BindingResult result) {
         if (result.hasErrors()) {
-            throw new UtilsBeanValidationError(result);
+            throw new UtilsBeanValidationException(result);
         }
     }
 }

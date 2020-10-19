@@ -13,11 +13,11 @@ import javax.validation.constraints.Size;
 public class SecurityUserPrincipalDao {
     @Email
     @NotNull
-    @ApiModelProperty(example = "admin@admin.com")
+    @ApiModelProperty(example = "admin@admin.com", required = true)
     private String email;
 
     @NotNull
     @Size(min = 6, max = 15)
-    @ApiModelProperty(example = "123456")
+    @ApiModelProperty(example = "123456", required = true)
     private String password;
 }

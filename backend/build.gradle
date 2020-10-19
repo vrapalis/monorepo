@@ -5,11 +5,14 @@ import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
 plugins {
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'com.bmuschko.docker-remote-api' version '6.4.0'
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id "com.avast.gradle.docker-compose" version "0.13.4"
 }
 
 ext {
     MAPSTRUCT_VERSION = '1.4.0.CR1';
     ASSERTJ_VERSION = '3.17.2';
+    set('springCloudVersion', "Hoxton.SR8")
 }
 
 subprojects {
@@ -48,6 +51,9 @@ subprojects {
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
+
+        testImplementation 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
     }
 
     test {
@@ -57,15 +63,16 @@ subprojects {
     dependencyManagement {
         imports {
             mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.1.RELEASE")
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
         }
     }
 }
 
+// Docker postgres configuration
 configure(subprojects.findAll { it.name == 'vrapalis' || it.name == 'chat' }) {
     apply plugin: 'com.bmuschko.docker-remote-api'
 
     afterEvaluate {
-
         task createPostgresDevContainer(type: DockerCreateContainer) {
             targetImageId 'postgres:latest'
             containerName = project.property('PROJECT_CONTAINER_NAME')

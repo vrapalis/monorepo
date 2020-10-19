@@ -5,6 +5,7 @@ import com.vrapalis.www.chat.security.domain.user.restdao.SecurityUserDao;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Mapper(componentModel = "spring")
 public interface SecurityUserMapper {

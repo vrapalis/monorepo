@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UtilsServerResponse {
+public class UtilsServerResponseDao {
     private String msg;
     private String path;
 }

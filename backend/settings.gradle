@@ -1,3 +1,4 @@
 rootProject.name = 'backend'
 
-include 'websites:vrapalis', 'libraries:utils', 'libraries:websites', 'libraries:swagger', 'apps:chat'
+include 'websites:vrapalis', 'libraries:utils', 'libraries:websites', 'libraries:swagger',
+        'apps:chat', 'apps:visitor-tracker:gateway', 'apps:visitor-tracker:uaa'

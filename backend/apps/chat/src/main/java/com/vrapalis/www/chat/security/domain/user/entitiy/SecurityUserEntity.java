@@ -19,6 +19,7 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 @Table(name = "app_user")
 public class SecurityUserEntity extends SecurityAbstractEntity implements Serializable {
 

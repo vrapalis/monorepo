@@ -15,6 +15,7 @@ import java.util.Objects;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 @Table(name = "authority")
 public class SecurityAuthorityEntity extends SecurityAbstractEntity implements Serializable {
 

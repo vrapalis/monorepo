@@ -96,10 +96,7 @@
               "apps/websites/vrapalis/tsconfig.spec.json",
               "apps/websites/vrapalis/tsconfig.server.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/websites/vrapalis/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/websites/vrapalis/**/*"]
           }
         },
         "test": {
@@ -148,9 +145,7 @@
           "options": {
             "browserTarget": "websites-vrapalis:build:production",
             "serverTarget": "websites-vrapalis:server:production",
-            "routes": [
-              "/"
-            ]
+            "routes": ["/"]
           },
           "configurations": {
             "production": {}
@@ -179,9 +174,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/websites/vrapalis-e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": ["apps/websites/vrapalis-e2e/tsconfig.e2e.json"],
             "exclude": [
               "**/node_modules/**",
               "!apps/websites/vrapalis-e2e/**/*"
@@ -203,10 +196,7 @@
               "libs/janus/tsconfig.lib.json",
               "libs/janus/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/janus/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/janus/**/*"]
           }
         },
         "test": {
@@ -218,6 +208,36 @@
         }
       },
       "schematics": {}
+    },
+    "uaa": {
+      "projectType": "library",
+      "root": "libs/uaa",
+      "sourceRoot": "libs/uaa/src",
+      "prefix": "browser",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/uaa/tsconfig.lib.json",
+              "libs/uaa/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/uaa/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/uaa/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

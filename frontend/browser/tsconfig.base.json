@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@browser/janus": ["libs/janus/src/index.ts"]
+      "@browser/janus": ["libs/janus/src/index.ts"],
+      "@browser/uaa": ["libs/uaa/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

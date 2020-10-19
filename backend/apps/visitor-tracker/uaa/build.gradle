@@ -1,0 +1,12 @@
+plugins {
+	id 'org.springframework.boot'
+}
+
+ext {
+	CREATE_DOCKER_FILE = "DOC"
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
